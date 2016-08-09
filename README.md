@@ -8,4 +8,4 @@
 3.	[Wikipedia] (https://en.wikipedia.org/wiki/Main_Page)
 4.	[Knockout.js] (http://knockoutjs.com/)
 5.	[jQuery] (http://api.jquery.com/jquery.ajax/) and [Bootstrap] (http://getbootstrap.com/)
-6.	[Stack Overflow] (stackoverflow.com) and [Udacity Forums] (https://discussions.udacity.com/c/nd001-neighborhood-map-project)
+6.	[Stack Overflow] (http://stackoverflow.com) and [Udacity Forums] (https://discussions.udacity.com/c/nd001-neighborhood-map-project)
