@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+	<meta name="description" content="Udacity FEND P5: Neighborhood Map">
+	<meta name="keywords" content="web developer, html, css, javascript, bootstrap, knockout, Rajiv Shankar">
+	<meta name="author" content="Rajiv Shankar">
+
+	<title>Portland, Maine</title>
+
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<!-- ---------------------------- View of MVVM ---------------------------- -->
+
+	<!-- MAP -->
+
+	<div class="col-xs-9 map" id="map"></div>
+
+	<div class="col-xs-3">
+
+		<h1>Portland, Maine</h1>
+
+		<!-- SEARCH BAR -->
+
+		<form>
+
+			<!-- link text box (input) with viewmodel property (lookup), providing two-way updates between property and value -->
+			<input type="text" placeholder="  Search Rajiv's neighborhood" autocomplete="off" autofocus data-bind="textInput: lookup" ><br>
+
+		</form>
+
+		<!-- LOCATIONS LIST -->
+
+		<!-- render list by binding section of markup for each entry in an array to the corresponding array item (match) -->
+		<ul id="locations" data-bind="foreach: match">
+
+			<!-- $index: KO observable, updated whenever index of item changes (e.g., if items are added to or removed from the array). -->
+			<!-- $parent: KO view model object in the parent context, the one immeditely outside the current context -->
+			<li id="" data-bind="text: name, attr: {id: $index}, click: $parent.clickLocation"></li>
+
+	  </ul>
+
+	</div>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/knockout.js"></script>
+    <script src="js/app.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBLcZ_boWPpWLl98hCNikyR-uikpQAldOo&amp;callback=initMap"
+    	async defer onerror="mapError()"></script>
+
+</body>

@@ -1,0 +1,41 @@
+html,
+body {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	text-align: center;
+	background-color: DarkBlue;
+	color: SkyBlue;
+	font-family: "Comic Sans MS";
+	font-size: 16px;
+}
+
+heading {
+	color: DarkBlue;
+	font-family: "Comic Sans MS";
+	font-weight: bold;
+	font-size: 24px;
+}
+
+blurb {
+	/*color: DarkBlue;*/
+	font-size: 16px;
+}
+
+.map {
+	height: 100%;
+	padding: 0;
+	margin: 0;
+	color: #000000;
+}
+
+ul {
+	padding: 5px;
+}
+
+li {
+	list-style-type: none;
+	border: 1px solid white;
+	cursor: pointer;
+	font-size: 20px;
+}
