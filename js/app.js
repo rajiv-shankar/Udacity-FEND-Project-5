@@ -89,11 +89,11 @@ var Location = function (info, map) {
 
 		if (lookup().length > 0) {	// if search box has entry
 			return (self.name().toLowerCase().indexOf(lookup().toLowerCase()) > -1);
-		}							// true: if this location matches search string (so index is 0 or greater)
-									// false: if not (index = -1)
+		}				// true: if this location matches search string (so index is 0 or greater)
+						// false: if not (index = -1)
 
-		else {						// OR if search box is empty
-			return true;			// true
+		else {				// OR if search box is empty
+			return true;		// true
 		}
 	}, this);
 
