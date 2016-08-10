@@ -164,6 +164,8 @@ var ViewModel = function(){
 		this.locationsList().forEach(function(location){
 			if (location.visible()) {	// if true ...
 				matches.push(location);	// add location to matches array
+			else {
+				location.marker.setVisible(false);
 			}
 		});
 		return matches;					// array of matches
