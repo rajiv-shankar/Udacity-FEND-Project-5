@@ -70,32 +70,34 @@ var Location = function (info, map) {
 
 	var self = this;
 
-	this.name = ko.observable(info.name);
-	this.location = ko.observable(info.location);
-	this.searchWiki = info.wikiEntry;
-	this.content = self.name();
+	self.name = ko.observable(info.name);
+	self.location = ko.observable(info.location);
+	self.searchWiki = info.wikiEntry;
+	self.content = self.name();
 
 	// define marker properties
-	this.marker = new google.maps.Marker({
-		name: this.name(),
-		position: this.location(),
+	self.marker = new google.maps.Marker({
+		name: self.name(),
+		position: self.location(),
 		map: map,
         animation: google.maps.Animation.DROP,
-        icon: 'images/beachflag.png'
-	  });
+        icon: 'images/beachflag.png',
+        // visible: false
+	});
 
 	// add location if it meets (or there is no) search criteria
-	this.visible = ko.computed(function() {
+	self.visible = ko.computed(function() {
 
 		if (lookup().length > 0) {	// if search box has entry
 			return (self.name().toLowerCase().indexOf(lookup().toLowerCase()) > -1);
-		}				// true: if this location matches search string (so index is 0 or greater)
-						// false: if not (index = -1)
+		}							// true: if this location matches search string (so index is 0 or greater)
+									// false: if not (index = -1)
 
-		else {				// OR if search box is empty
-			return true;		// true
+		else {						// OR if search box is empty
+			return true;			// true
 		}
-	}, this);
+
+	}, self);
 
 	// search Wikipedia for location info and display: name, blurb, source
 	$.ajax({
@@ -104,19 +106,19 @@ var Location = function (info, map) {
 		url: wikiLink+self.searchWiki,
 		timeout: 2000
 	}).done(function(info) {
-		   self.content = '<heading>' + self.name() + '</heading>' + '<br>' +
-		    '<blurb>' + info[2][0] + '<br>' +
-		    '<i>' + '<a href=' + info[3][0] + ' target="blank">Wikipedia</a>' + '</i>'  + '</blurb>';
+		self.content = '<heading>' + self.name() + '</heading>' + '<br>' +
+		'<blurb>' + info[2][0] + '<br>' +
+		'<i>' + '<a href=' + info[3][0] + ' target="blank">Wikipedia</a>' + '</i>'  + '</blurb>';
 	}).fail(function(jqXHR, textStatus){
-			alert("Wikipedia resources did not load. Please refresh page.");
+		alert("Wikipedia resources did not load. Please refresh page.");
 	});
 
 	// bounce map marker when it or list-location is selected
-	this.bounceMarker = function() {
-			self.marker.setAnimation(google.maps.Animation.BOUNCE);
-			setTimeout(function(){
-				self.marker.setAnimation(null);
-			}, 1400);
+	self.bounceMarker = function() {
+		self.marker.setAnimation(google.maps.Animation.BOUNCE);
+		setTimeout(function(){
+			self.marker.setAnimation(null);
+		}, 1400);
 	};
 };
 
@@ -131,20 +133,20 @@ var ViewModel = function(){
 	var self = this;
 
 	// create map, centered near Arcadia
-	this.map = new google.maps.Map(document.getElementById('map'), {
+	self.map = new google.maps.Map(document.getElementById('map'), {
 		center: {lat: 43.686000, lng: -70.2400000},
 		zoom: 13,
 		mapTypeControl: false
 	});
 
 	// initialize location array (using JSON above)
-	this.locationsList = ko.observableArray([]);
-		mapLocations.forEach(function(locationItem){
-			self.locationsList.push(new Location(locationItem, self.map));
+	self.locationsList = ko.observableArray([]);
+	mapLocations.forEach(function(locationItem){
+		self.locationsList.push(new Location(locationItem, self.map));
 	});
 
 	// create event listeners for marker clicks
-	this.locationsList().forEach(function(location){
+	self.locationsList().forEach(function(location){
 		google.maps.event.addListener(location.marker, 'click', function () {
 			self.clickLocation(location);
 		});
@@ -152,24 +154,28 @@ var ViewModel = function(){
 
 	// open infoWindow above map marker with additional information
 	var infoWindow = new google.maps.InfoWindow();
-	this.clickLocation = function(location) {
+	self.clickLocation = function(location) {
 		infoWindow.setContent(location.content);
-		infoWindow.open(this.map, location.marker);
+		infoWindow.open(self.map, location.marker);
 		location.bounceMarker();
 	};
 
 	// create array of locations meeting search criteria
 	self.match = ko.computed(function(){
 		var matches = [];
-		this.locationsList().forEach(function(location){
+		self.locationsList().forEach(function(location){
 			if (location.visible()) {	// if true ...
 				matches.push(location);	// add location to matches array
-			else {
-				location.marker.setVisible(false);
+				location.marker.setVisible(true);  // makes marker visible
+			}
+			else {						// if false ...
+				location.marker.setVisible(false);  // makes marker invisible
 			}
 		});
 		return matches;					// array of matches
-	}, this);
+
+	}, self);
+
 };
 
 /*---------------------------------------------------------------------------*/
